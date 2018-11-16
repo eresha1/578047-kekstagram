@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм» [![Build status][travis-image]][travis-url]
 
 * Студент: [Ирина Бутина](https://up.htmlacademy.ru/javascript/16/user/578047).
-* Наставник: [Андрей Рыжаков]
+* Наставник: [Андрей Рыжаков](https://htmlacademy.ru/profile/id201015).
 
 ---
 
