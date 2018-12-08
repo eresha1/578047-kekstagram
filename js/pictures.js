@@ -26,22 +26,6 @@ var generateArr = function (arr) {
   return randItem;
 };
 
-// var getArrayComments = function () {
-
-//   var arrayComments = [];
-//   var numberComments = getRandomInteger(MIN_COMMENTS, MAX_COMMENTS);
-//   for (var i = MIN_COMMENTS; i <= numberComments; i++) {
-//     var random = Math.random();
-//     if (random < 0.5) {
-//       var comment = generateArr(COMMENTS);
-
-//     } else {
-//       comment = generateArr(COMMENTS) + ' ' + generateArr(COMMENTS);
-//     }
-//     arrayComments.push(comment);
-//   }
-//   return arrayComments;
-// };
 
 // Выдает рандомный комментарий, состоящий из 1 или 2 фраз (но фразы не уникальные)
 
@@ -103,7 +87,8 @@ var generatePhotoCollection = function (count) {
 
 // массив с фото
 var photoCollection = generatePhotoCollection(PHOTOS_COUNT);
-// console.log(photoCollection[1]);
+
+// console.log(photoCollection[].url);
 
 // Находим контейнер, в который будем вставлять маленькие картинки
 var сontainerPictures = document.querySelector('.pictures');
@@ -112,7 +97,7 @@ var сontainerPictures = document.querySelector('.pictures');
 var pictureTemplate = document.querySelector('#picture').content;
 
 
-// Создаем содержимое блока маленькой фотографии на основе шаблона
+// Создаем содержимое блока маленькой картинки на основе шаблона
 
 var renderPicture = function (picture) {
   var pictureElement = pictureTemplate.cloneNode(true);
@@ -134,16 +119,16 @@ var getFragment = function () {
 
 сontainerPictures.appendChild(getFragment());
 
+
 // БОЛЬШАЯ КАРТИНКА
 
 
-// Находим блок с большим изображением и показываем его
+// Находим блок с большим изображением
 
 var bigPicture = document.querySelector('.big-picture');
-bigPicture.classList.remove('hidden');
 
 // Находим в разметке фото
-var bigPicturePhoto = bigPicture.querySelector('.big-picture__img > img');
+var bigPicturePhoto = bigPicture.querySelector('.big-picture__img img');
 
 // Находим в разметке информацию о фото:
 // подпись.
@@ -194,11 +179,181 @@ var renderBigPictureElement = function (element) {
   renderBigPictureComments(element);
 };
 
-
- renderBigPictureElement(photoCollection[2]);
-
 // Прячем блок счётчика комментариев
 bigPicture.querySelector('.social__comment-count').classList.add('visually-hidden');
 
 // Прячем блок загрузки новых комментариев
 bigPicture.querySelector('.comments-loader').classList.add('visually-hidden');
+
+
+// Загрузка и показ формы редактирования
+// кнопка загрузки изображения
+
+var ESC_KEYCODE = 27;
+var ENTER_KEYCODE = 13;
+var EFFECT_LEVEL_DEFAULT = 20;
+
+var uploadFile = сontainerPictures.querySelector('#upload-file');
+
+// Форма редактирования изображения
+var uploadOverlay = сontainerPictures.querySelector('.img-upload__overlay');
+
+// Кнопка закрытия формы редактирования
+var uploadCancelBtn = сontainerPictures.querySelector('#upload-cancel');
+
+// Появление и закрытие попапа
+
+
+var openPopup = function (target) {
+  target.classList.remove('hidden');
+  // document.addEventListener('keydown', popupEscPressHandler);
+};
+
+var closePopup = function (target) {
+  target.classList.add('hidden');
+  // document.removeEventListener('keydown', popupEscPressHandler);
+};
+
+// обработчик закрытия окна формы загрузки по нажатию на Esc (вопрос: нужно ли добавлять обработчик )
+
+var popupEscPressHandler = function (evt) {
+  if (evt.keyCode === ESC_KEYCODE) {
+    closePopup(uploadOverlay);
+  }
+};
+
+
+uploadFile.addEventListener('change', function () {
+  openPopup(uploadOverlay);
+  document.addEventListener('keydown', popupEscPressHandler);
+});
+
+
+// Обработка закрытия формы загрузки
+
+// по нажатию на крестик
+
+uploadCancelBtn.addEventListener('click', function () {
+  closePopup(uploadOverlay);
+
+  document.removeEventListener('keydown', popupEscPressHandler);
+});
+
+// клавишей enter
+
+uploadCancelBtn.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === ENTER_KEYCODE) {
+    closePopup(uploadOverlay);
+  }
+  document.removeEventListener('keydown', popupEscPressHandler);
+});
+
+// РАБОТА С ЭФФЕКТАМИ
+
+var uploadEffects = сontainerPictures.querySelector('.img-upload__effects');
+
+// var uploadPreview = сontainerPictures.querySelector('.img-upload__preview');
+
+var effectLevelPin = сontainerPictures.querySelector('.effect-level__pin');
+
+
+var effectLevelValue = сontainerPictures.querySelector('.effect-level__value');
+
+
+// Добавление обработчиков на эффекты
+
+var effectsItemInput = uploadEffects.querySelectorAll('.effects__item input');
+
+// Вопрос по наименованию функции addEventListenerEffect???
+
+var EffectClickHandler = function (effects) {
+  debugger
+
+  // не переключается в обратном порядке
+  effects.addEventListener('click', function () {
+    effectLevelChange(EFFECT_LEVEL_DEFAULT);
+    сontainerPictures.querySelector('img').classList.add('effects__preview--' + effects.value);
+  });
+};
+
+// Объявлен глобально или надо сделать иначе?
+
+for (var i = 0; i < effectsItemInput.length; i++) {
+  EffectClickHandler(effectsItemInput[i]);
+}
+
+// ОБРАБОТКА ДЕЙСТВИЙ ПО ВЗАИМОДЕЙСТВИЮ С ПОЛЗУНКОМ
+
+// изменение значения ползунка
+
+var effectLevelChange = function (level) {
+  effectLevelValue.value = level;
+};
+
+// при отпускании ползунка - определяем координаты ползунка
+
+var effectLevelPinMouseupHandler = function () {
+
+  // ширина родительского блока
+  var fullWidth = effectLevelPin.parentElement.offsetWidth;
+  // расположение ползунка
+  var level = Math.floor(effectLevelPin.offsetLeft * 100 / fullWidth);
+
+  effectLevelChange(level);
+};
+
+// ОТКРЫТИЕ И ЗАКРЫТИЕ БОЛЬШОЙ КАРТИНКИ
+
+// обработчик закрытия большой картинки по нажатию на Esc (как сделать универсальный?)
+
+var bigPictureEscPressHandler = function (evt) {
+  if (evt.keyCode === ESC_KEYCODE) {
+    closePopup(bigPicture);
+  }
+};
+
+// Открытие большой картинки
+function showBigPictureClickHandler() {
+  openPopup(bigPicture);
+  document.addEventListener('keydown', bigPictureEscPressHandler);
+}
+
+
+// Добавление обработчиков на все маленькие картинки
+
+var thumbnails = сontainerPictures.querySelectorAll('.picture');
+// Вопрос по наименованию функции ToThumbnailsClickHandler???
+var addListenersToThumbnails = function (preview, element) {
+  preview.addEventListener('click', function () {
+    renderBigPictureElement(element);
+    showBigPictureClickHandler();
+  });
+};
+
+// Объявлен глобально или надо сделать иначе?
+
+for (var j = 0; j < thumbnails.length; j++) {
+  addListenersToThumbnails(thumbnails[j], photoCollection[j]);
+}
+
+
+// Кнопка закрытия большой картинки
+var bigPictureCancelBtn = bigPicture.querySelector('#picture-cancel');
+
+// закрытие по нажатию на крестик
+
+bigPictureCancelBtn.addEventListener('click', function () {
+  closePopup(bigPicture);
+
+  document.removeEventListener('keydown', bigPictureEscPressHandler);
+});
+
+// закрытие клавишей enter
+
+bigPictureCancelBtn.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === ENTER_KEYCODE) {
+    closePopup(bigPicture);
+  }
+  document.removeEventListener('keydown', bigPictureEscPressHandler);
+});
+
