@@ -67,12 +67,12 @@
 
 
   var effectMap = {
-    none: {filter: 'none', min: '', max: '', block: ''},
-    chrome: {filter: 'grayscale', min: 0, max: 1, block: ''},
-    sepia: {filter: 'sepia', min: 0, max: 1, block: ''},
-    marvin: {filter: 'invert', min: 0, max: 100, block: '%'},
-    phobos: {filter: 'blur', min: 0, max: 3, block: 'px'},
-    heat: {filter: 'brightness', min: 1, max: 3, block: ''}
+    none: {filter: 'none', min: '', max: '', unit: ''},
+    chrome: {filter: 'grayscale', min: 0, max: 1, unit: ''},
+    sepia: {filter: 'sepia', min: 0, max: 1, unit: ''},
+    marvin: {filter: 'invert', min: 0, max: 100, unit: '%'},
+    phobos: {filter: 'blur', min: 0, max: 3, unit: 'px'},
+    heat: {filter: 'brightness', min: 1, max: 3, unit: ''}
       };
 
 
