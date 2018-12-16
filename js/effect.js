@@ -1,5 +1,6 @@
 'use strict';
 (function () {
+  var SCALE_CONTROL_VALUE_MAX = 100;
   var effectBox = document.querySelector('.img-upload__effects');
   var effectTarget = document.querySelector('.img-upload__preview img');
   var slider = document.querySelector('.img-upload__effect-level');
@@ -10,6 +11,30 @@
   var effectPin = linePine.querySelector('.effect-level__pin');
   var lineDepth = linePine.querySelector('.effect-level__depth');
   // var effectValue = document.querySelector('.effect-level__value');
+  var btnBigger = document.querySelector('.scale__control--bigger');
+  var btnSmaller = document.querySelector('.scale__control--smaller');
+  var controlScale = document.querySelector('.scale__control--value');
+  var newValue = SCALE_CONTROL_VALUE_MAX;
+
+  btnBigger.addEventListener('click', function () {
+    if (newValue >= 100) {
+      newValue += 0;
+    } else {
+      newValue += 25;
+      controlScale.value = newValue + '%';
+      effectTarget.style.transform = 'scale' + '(' + newValue / 100 + ')';
+    }
+  });
+
+  btnSmaller.addEventListener('click', function () {
+    if (newValue <= 25) {
+      newValue -= 0;
+    } else {
+      newValue -= 25;
+      controlScale.value = newValue + '%';
+      effectTarget.style.transform = 'scale' + '(' + newValue / 100 + ')';
+    }
+  });
 
   // СЛАЙДЕР
 
@@ -60,10 +85,10 @@
 
 
 
- // var resetFilterLevel = function () {
- //    effectPin.style.left = '100%';
- //    lineDepth.style.width = '100%';
-// }
+  // var resetFilterLevel = function () {
+  //    effectPin.style.left = '100%';
+  //    lineDepth.style.width = '100%';
+  // }
 
 
   var effectMap = {
@@ -73,9 +98,7 @@
     marvin: {filter: 'invert', min: 0, max: 100, unit: '%'},
     phobos: {filter: 'blur', min: 0, max: 3, unit: 'px'},
     heat: {filter: 'brightness', min: 1, max: 3, unit: ''}
-      };
-
-
+  };
 
   // Для слайдера заготовка получения значения
   /* console.dir(effectBox)
@@ -88,9 +111,6 @@
   function getEffectValue(min, max, num) {
     return min + (max - min) * (num / 100);
   } */
-
-
-
   function setEffects() {
     effectBox.addEventListener('change', changeEffectHandler);
     slider.classList.add('hidden');
