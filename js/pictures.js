@@ -48,7 +48,7 @@ var getComment = function () {
 //   for (var i = 0; i < count; i++) {
 //     var index = getRandomInteger (i, COMMENTS.length - 1);
 //     var tmp = COMMENTS[index];
-//     COMMENTS[index] = arrayComment[i];
+//     COMMENTS[index] = COMMENTS[i];
 //     COMMENTS[i] = tmp;
 //     arrayComment.push(tmp);
 //   }
