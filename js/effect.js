@@ -16,6 +16,7 @@
   var controlScale = document.querySelector('.scale__control--value');
   var newValue = SCALE_CONTROL_VALUE_MAX;
 
+
   btnBigger.addEventListener('click', function () {
     if (newValue >= 100) {
       newValue += 0;
@@ -35,8 +36,6 @@
       effectTarget.style.transform = 'scale' + '(' + newValue / 100 + ')';
     }
   });
-
-  // СЛАЙДЕР
 
   var pinMouseDownHandler = function (evt) {
     evt.preventDefault();
@@ -83,12 +82,6 @@
 
   effectPin.addEventListener('mousedown', pinMouseDownHandler);
 
-
-
-  // var resetFilterLevel = function () {
-  //    effectPin.style.left = '100%';
-  //    lineDepth.style.width = '100%';
-  // }
 
 
   var effectMap = {
