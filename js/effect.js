@@ -10,12 +10,22 @@
   var linePine = slider.querySelector('.effect-level__line');
   var effectPin = linePine.querySelector('.effect-level__pin');
   var lineDepth = linePine.querySelector('.effect-level__depth');
-  // var effectValue = document.querySelector('.effect-level__value');
   var btnBigger = document.querySelector('.scale__control--bigger');
   var btnSmaller = document.querySelector('.scale__control--smaller');
   var controlScale = document.querySelector('.scale__control--value');
   var newValue = SCALE_CONTROL_VALUE_MAX;
+  var effectMap = {
+    none: {filter: 'none', min: '', max: '', unit: ''},
+    chrome: {filter: 'grayscale', min: 0, max: 1, unit: ''},
+    sepia: {filter: 'sepia', min: 0, max: 1, unit: ''},
+    marvin: {filter: 'invert', min: 0, max: 100, unit: '%'},
+    phobos: {filter: 'blur', min: 0, max: 3, unit: 'px'},
+    heat: {filter: 'brightness', min: 1, max: 3, unit: ''}
+  };
 
+  function getEffectValue(min, max, num) {
+    return min + (max - min) * (num / 100);
+  }
 
   btnBigger.addEventListener('click', function () {
     if (newValue >= 100) {
@@ -67,6 +77,8 @@
       effectPin.style.left = scale + '%';
       lineDepth.style.width = scale + '%';
 
+      var value = getEffectValue(effectMap[appliedEffect].min, effectMap[appliedEffect].max, scale);
+      effectTarget.style.filter = effectMap[appliedEffect].filter + '(' + value + effectMap[appliedEffect].unit + ')';
     };
 
     var pinMouseUpHandler = function (upEvt) {
@@ -83,27 +95,6 @@
   effectPin.addEventListener('mousedown', pinMouseDownHandler);
 
 
-
-  var effectMap = {
-    none: {filter: 'none', min: '', max: '', unit: ''},
-    chrome: {filter: 'grayscale', min: 0, max: 1, unit: ''},
-    sepia: {filter: 'sepia', min: 0, max: 1, unit: ''},
-    marvin: {filter: 'invert', min: 0, max: 100, unit: '%'},
-    phobos: {filter: 'blur', min: 0, max: 3, unit: 'px'},
-    heat: {filter: 'brightness', min: 1, max: 3, unit: ''}
-  };
-
-  // Для слайдера заготовка получения значения
-  /* console.dir(effectBox)
-
-  var effectMap = {
-
-  }
-  effectMap[appliedEffect]
-
-  function getEffectValue(min, max, num) {
-    return min + (max - min) * (num / 100);
-  } */
   function setEffects() {
     effectBox.addEventListener('change', changeEffectHandler);
     slider.classList.add('hidden');
@@ -120,17 +111,21 @@
       var method = appliedEffect === 'none' ? 'add' : 'remove';
       slider.classList[method]('hidden');
       effectTarget.classList.remove(currentEffect);
+
+      // не убирает последний использованный фильтр при выборе оригинала (не становится style="filter: none;")
+      effectTarget.style.filter = effectMap[appliedEffect].filter + '(' + effectMap[appliedEffect].max + effectMap[appliedEffect].unit + ')';
+
+      // сдвигаю ползунок на 100% - Tак можно делать?
+      effectPin.style.left = 100 + '%';
+      lineDepth.style.width = 100 + '%';
+
       currentEffect = 'effects__preview--' + appliedEffect;
       effectTarget.classList.add(currentEffect);
     }
-    var minRang = (effectMap[appliedEffect]).min;
-    var maxRang = (effectMap[appliedEffect]).max;
-    console.log(minRang, maxRang)
-
   }
 
   window.effect = {
     activate: setEffects,
     deActivate: removeEffects
-  }
+  };
 })();
