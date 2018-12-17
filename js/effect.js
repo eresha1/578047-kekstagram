@@ -23,6 +23,8 @@
     heat: {filter: 'brightness', min: 1, max: 3, unit: ''}
   };
 
+  controlScale .value = '100%';
+
   function getEffectValue(min, max, num) {
     return min + (max - min) * (num / 100);
   }
