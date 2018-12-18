@@ -19,14 +19,14 @@
     overlay.classList.remove('hidden');
     document.addEventListener('keydown', escPressHandler);
     closeFormBtn.addEventListener('click', closeFormHandler);
-    // window.effect.activate();
+    window.effect.activate();
   }
 
   function closeForm() {
     overlay.classList.add('hidden');
     document.removeEventListener('keydown', escPressHandler);
     closeFormBtn.removeEventListener('click', closeFormHandler);
-    // window.effect.deActivate();
+    window.effect.deActivate();
     form.reset();
   }
   function closeFormHandler(event) {
