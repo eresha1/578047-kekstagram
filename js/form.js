@@ -34,7 +34,6 @@
     closeForm();
   }
 
-
   window.form = {
     activate: activateForm,
     deActivate: deActivateForm
