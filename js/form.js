@@ -20,6 +20,7 @@
     document.addEventListener('keydown', escPressHandler);
     closeFormBtn.addEventListener('click', closeFormHandler);
     window.effect.activate();
+    window.validation.activate();
   }
 
   function closeForm() {
@@ -27,13 +28,13 @@
     document.removeEventListener('keydown', escPressHandler);
     closeFormBtn.removeEventListener('click', closeFormHandler);
     window.effect.deActivate();
+    window.validation.deActivate();
     form.reset();
   }
   function closeFormHandler(event) {
     event.preventDefault();
     closeForm();
   }
-
 
   window.form = {
     activate: activateForm,

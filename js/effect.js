@@ -110,8 +110,6 @@
       slider.classList[method]('hidden');
       effectTarget.classList.remove(currentEffect);
 
-      // может это и неправильно, но по-другому не придумаю
-
       if (effectMap[appliedEffect].showRange === false) {
         effectTarget.style.filter = '';
       }
