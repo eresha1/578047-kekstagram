@@ -90,7 +90,9 @@
   //   redBorder(textComment);
   // });
 
+
   function verifyValidity() {
+    textHashtag.focus();
     textHashtag.addEventListener('input', hashtagInputHandler);
     textComment.addEventListener('change', commentChangeHandler);
   }
@@ -100,13 +102,13 @@
     textComment.removeEventListener('change', commentChangeHandler);
   }
 
-
   // textHashtag.addEventListener('focus', function () {
-  //   document.removeEventListener('keydown', escPressHandler);
+  //   document.removeEventListener('keydown', );
   // });
 
+
   // textHashtag.addEventListener('blur', function () {
-  //   document.addEventListener('keydown', escPressHandler);
+  //   document.addEventListener('keydown', );
   // });
 
   window.validation = {
