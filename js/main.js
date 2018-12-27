@@ -14,7 +14,7 @@
     window.picture.render(pictures, window.bigPicture.show);
     window.bigPicture.setHandler(escPress);
     window.form.activate(escPress);
-    window.effect.activate(); ;
+    window.effect.activate();
 
   });
 })();
