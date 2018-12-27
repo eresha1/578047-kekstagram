@@ -7,9 +7,7 @@
 
   var HASHTAG_MAX_NUMBER = 5;
   var DESCRIPTION_LENGTH = 140;
-  // var HASHTAG = {
-  //   regex: /^#([А-Яа-яЁёA-Za-z]{1,19})$/
-  // };
+
   var ERROR_MESSAGE = {
     noError: '',
     firstSimbol: 'Хэш-тег начинается с символа # (решётка). ',
@@ -26,46 +24,53 @@
   };
 
   var checkHashtag = function (array) {
-    var counter = 'good';
+    var counter = false;
     var newArr = [];
-    array.forEach(function (element) {
+    if (array.length > HASHTAG_MAX_NUMBER) {
+      return ERROR_MESSAGE.maxHashtag;
+    }
+    for (var i = 0; i < array.length; i++) {
+      var element = array[i];
       element = element.toLowerCase();
       if (element[0] !== '#') {
         counter = ERROR_MESSAGE.firstSimbol;
+        break;
       }
-      if (element === '#') {
+      if (element.length < 2) {
         counter = ERROR_MESSAGE.errorContent;
+        break;
       }
       if (element.length > 20) {
         counter = ERROR_MESSAGE.maxLengthHashtag;
+        break;
       }
       if (element.indexOf('#', 1) > -1) {
         counter = ERROR_MESSAGE.noSpace;
+        break;
       }
       if (newArr.includes(element)) {
         counter = ERROR_MESSAGE.notRepeat;
+        break;
       } else {
         newArr.push(element);
       }
-    });
+    }
     return counter;
   };
 
   var hashtagInputHandler = function (evt) {
     var hashtagsArr = getHashtagsArray(textHashtag);
     var target = evt.target;
-    var hashtag = checkHashtag(hashtagsArr);
-    if (hashtag !== 'good') {
-      target.setCustomValidity(hashtag);
-    } else if (hashtagsArr.length > HASHTAG_MAX_NUMBER) {
-      target.setCustomValidity(ERROR_MESSAGE.maxHashtag);
-    } else {
-      target.setCustomValidity('');
-    }
+    var hashtagErr = checkHashtag(hashtagsArr);
     if (textHashtag.value === '') {
       target.setCustomValidity('');
     }
-    redBorder(textHashtag);
+    if (hashtagErr) {
+      target.setCustomValidity(hashtagErr);
+      changeColorBorder(textHashtag);
+    } else {
+      target.setCustomValidity('');
+    }
   };
 
   var commentChangeHandler = function () {
@@ -74,22 +79,16 @@
     } else {
       textComment.setCustomValidity('');
     }
-    redBorder(textComment);
+    changeColorBorder(textComment);
   };
 
-  var redBorder = function (field) {
+  var changeColorBorder = function (field) {
     if (field.validity.valid) {
       field.style.outline = 'none';
     } else {
       field.style.outline = '2px solid red';
     }
   };
-
-  // btnSubmit.addEventListener('click', function () {
-  //   redBorder(textHashtag);
-  //   redBorder(textComment);
-  // });
-
 
   function verifyValidity() {
     textHashtag.focus();
@@ -102,14 +101,7 @@
     textComment.removeEventListener('change', commentChangeHandler);
   }
 
-  // textHashtag.addEventListener('focus', function () {
-  //   document.removeEventListener('keydown', );
-  // });
-
-
-  // textHashtag.addEventListener('blur', function () {
-  //   document.addEventListener('keydown', );
-  // });
+  // При открытии формы после ее закрытия на крестик или ESC (без перезагрузки страницы), не удаляется сообщение о последней ошибке и красная рамка)
 
   window.validation = {
     activate: verifyValidity,

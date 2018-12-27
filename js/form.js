@@ -24,13 +24,16 @@
   }
 
   function closeForm() {
-    overlay.classList.add('hidden');
-    document.removeEventListener('keydown', escPressHandler);
-    closeFormBtn.removeEventListener('click', closeFormHandler);
-    window.effect.deActivate();
-    window.validation.deActivate();
-    form.reset();
+    if (document.activeElement !== form.hashtags && form) {
+      overlay.classList.add('hidden');
+      document.removeEventListener('keydown', escPressHandler);
+      closeFormBtn.removeEventListener('click', closeFormHandler);
+      window.effect.deActivate();
+      window.validation.deActivate();
+      form.reset();
+    }
   }
+
   function closeFormHandler(event) {
     event.preventDefault();
     closeForm();
