@@ -99,9 +99,11 @@
   function removeVerifyValidity() {
     textHashtag.removeEventListener('input', hashtagInputHandler);
     textComment.removeEventListener('change', commentChangeHandler);
+    textHashtag.setCustomValidity('');
+    textComment.setCustomValidity('');
+    textHashtag.style.outline = 'none';
+    textComment.style.outline = 'none';
   }
-
-  // При открытии формы после ее закрытия на крестик или ESC (без перезагрузки страницы), не удаляется сообщение о последней ошибке и красная рамка)
 
   window.validation = {
     activate: verifyValidity,
