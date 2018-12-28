@@ -30,6 +30,7 @@
     count += renderedCommentsCount;
     for (var i = renderedCommentsCount; i < count; i++) {
       if (!comments[i]) {
+        commentLoader.classList.add('hidden');
         break;
       }
       var comment = document.createElement('li');

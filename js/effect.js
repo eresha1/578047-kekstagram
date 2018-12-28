@@ -3,8 +3,11 @@
   var effectBox = document.querySelector('.img-upload__effects');
   var effectTarget = document.querySelector('.img-upload__preview img');
   var slider = document.querySelector('.img-upload__effect-level');
+
+  var effectInput = effectBox.querySelector('.effects__radio[checked]');
   var currentEffect = 'effects__preview--none';
-  var appliedEffect = 'none';
+  var appliedEffect = effectInput.value;
+
   var linePine = slider.querySelector('.effect-level__line');
   var effectPin = linePine.querySelector('.effect-level__pin');
   var lineDepth = linePine.querySelector('.effect-level__depth');
@@ -19,9 +22,11 @@
     phobos: {filter: 'blur', showRange: true, min: 0, max: 3, unit: 'px'},
     heat: {filter: 'brightness', showRange: true, min: 1, max: 3, unit: ''}
   };
+  var size = {min: 25, max: 100, step: 25, default: 100};
+
+  var changeEffect = new Event('change', {bubbles: true});
 
   var resizeImg = function (argument) {
-    var size = {min: 25, max: 100, step: 25, default: 100};
     var newValue = controlScale.value;
     newValue = parseInt(newValue, 10) + size.step * argument;
     if (newValue >= size.max) {
@@ -29,7 +34,7 @@
     } else if (newValue <= size.min) {
       newValue = size.min;
     }
-    effectTarget.style.transform = 'scale' + '(' + newValue / 100 + ')';
+    effectTarget.parentElement.style.transform = 'scale' + '(' + newValue / 100 + ')';
     controlScale.value = newValue + '%';
   };
 
@@ -81,20 +86,13 @@
 
   effectPin.addEventListener('mousedown', pinMouseDownHandler);
 
-  function resetSettings() {
-    effectTarget.style.filter = 'none';
-    effectTarget.style.transform = 'scale' + '(1)';
-    controlScale.value = '100%';
-  }
-
   function setEffects() {
     effectBox.addEventListener('change', changeEffectHandler);
-    slider.classList.add('hidden');
-    effectTarget.classList.add(currentEffect);
-    effectBox.elements[0].checked = true;
+    effectInput.dispatchEvent(changeEffect);
     btnBigger.addEventListener('click', btnBiggerClickHandler);
     btnSmaller.addEventListener('click', btnSmallerClickHandler);
-    resetSettings();
+    effectTarget.parentElement.style.transform = 'scale(1)';
+    controlScale.value = '100%';
   }
   function removeEffects() {
     effectBox.removeEventListener('change', changeEffectHandler);
