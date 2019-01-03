@@ -15,6 +15,8 @@
     window.bigPicture.setHandler(escPress);
     window.form.activate(escPress);
     window.effect.activate();
+    window.message.setErrorHandler(escPress);
+    window.message.setSuccessHandler(escPress);
 
   });
 })();

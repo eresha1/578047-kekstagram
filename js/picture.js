@@ -24,7 +24,14 @@
     });
   }
 
-  // Почему pictures, а не picture (по названию модуля)
+
+  // var onError = function (errorMessage) {
+  //   window.message.openError(errorMessage);
+  // };
+
+  // window.backend.load(renderPictures, onError);
+
+
   window.picture = {
     render: renderPictures
   };

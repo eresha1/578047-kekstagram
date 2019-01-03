@@ -67,7 +67,7 @@
     }
     if (hashtagErr) {
       target.setCustomValidity(hashtagErr);
-      changeColorBorder(textHashtag);
+      // changeColorBorder(textHashtag);
     } else {
       target.setCustomValidity('');
     }
@@ -79,16 +79,16 @@
     } else {
       textComment.setCustomValidity('');
     }
-    changeColorBorder(textComment);
+    // changeColorBorder(textComment);
   };
 
-  var changeColorBorder = function (field) {
-    if (field.validity.valid) {
-      field.style.outline = 'none';
-    } else {
-      field.style.outline = '2px solid red';
-    }
-  };
+  // var changeColorBorder = function (field) {
+  //   if (field.validity.valid) {
+  //     field.style.outline = 'none';
+  //   } else {
+  //     field.style.outline = '2px solid red';
+  //   }
+  // };
 
   function verifyValidity() {
     textHashtag.focus();

@@ -5,6 +5,7 @@
   var overlay = form.querySelector('.img-upload__overlay');
   var closeFormBtn = form.querySelector('#upload-cancel');
   var uploadFile = form.querySelector('#upload-file');
+  // var uploadSendBtn = form.querySelector('.img-upload__submit');
   var escPressHandler = null;
 
   function activateForm(handler) {
@@ -14,11 +15,12 @@
   function deActivateForm() {
     uploadFile.removeEventListener('change', openFormHandler);
   }
-  function openFormHandler(event) {
-    event.preventDefault();
+  function openFormHandler(evt) {
+    evt.preventDefault();
     overlay.classList.remove('hidden');
     document.addEventListener('keydown', escPressHandler);
     closeFormBtn.addEventListener('click', closeFormHandler);
+    // uploadSendBtn.disabled = false;
     window.effect.activate();
     window.validation.activate();
   }
@@ -34,10 +36,22 @@
     }
   }
 
-  function closeFormHandler(event) {
-    event.preventDefault();
+  function closeFormHandler(evt) {
+    evt.preventDefault();
     closeForm();
   }
+
+  form.addEventListener('submit', function (evt) {
+    window.backend.upload(new FormData(form), function () {
+      window.message.openSuccess();
+      closeForm();
+    },
+    function () {
+      window.message.openError();
+      closeForm();
+    });
+    evt.preventDefault();
+  });
 
   window.form = {
     activate: activateForm,
