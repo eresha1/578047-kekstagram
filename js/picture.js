@@ -24,15 +24,18 @@
     });
   }
 
+  var getSuccessHandler = renderPictures(renderedPhoto);
 
-  // var onError = function (errorMessage) {
-  //   window.message.openError(errorMessage);
-  // };
+  var getErrorHandler = function (errorMessage) {
+    window.message.openError(errorMessage);
+  };
 
-  // window.backend.load(renderPictures, onError);
+  // window.backend.load(getSuccessHandler, getErrorHandler);
 
 
   window.picture = {
-    render: renderPictures
+    render: renderPictures,
+    getSuccessHandler: getSuccessHandler,
+    getErrorHandler: getErrorHandler
   };
 })();
