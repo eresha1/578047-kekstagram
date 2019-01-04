@@ -4,6 +4,7 @@
   var main = document.querySelector('main');
   var errorTemplate = document.querySelector('#error').content.querySelector('.error');
   var successTemplate = document.querySelector('#success').content.querySelector('.success');
+  // var messagesTemplate = document.querySelector('#messages').content.querySelector('.img-upload__message');
   var escPressSuccessHandler = null;
   var escPressErrorHandler = null;
 
@@ -50,10 +51,17 @@
     }
   };
 
-  var openError = function () {
+  // var openMessageUpload = function () {
+  //   var messageUpload = messagesTemplate.cloneNode(true);
+  //   main.appendChild(messageUpload);
+  // };
+
+
+  var openError = function (errorText) {
     var messageError = errorTemplate.cloneNode(true);
     main.appendChild(messageError);
-    // messageError.querySelector('.error__title').textContent = errorMessage;
+    messageError.querySelector('.error__title').textContent = errorText;
+    messageError.querySelector('.error__title').style = 'line-height: 1.5';
     var errorMessageBtn = messageError.querySelectorAll('.error__button');
     errorMessageBtn[0].focus();
     errorMessageBtn.forEach(function (item) {
@@ -72,11 +80,16 @@
     document.removeEventListener('click', errorInnerClickHandler);
   };
 
+  var loadError = function (errorMessage) {
+    loadError.error = errorMessage;
+  };
+
   window.message = {
     openSuccess: openSuccess,
     openError: openError,
     setErrorHandler: setErrorHandler,
-    setSuccessHandler: setSuccessHandler
+    setSuccessHandler: setSuccessHandler,
+    loadError: loadError
   };
 
 })();

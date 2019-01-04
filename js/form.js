@@ -42,15 +42,15 @@
   }
 
   form.addEventListener('submit', function (evt) {
+    evt.preventDefault();
     window.backend.upload(new FormData(form), function () {
       window.message.openSuccess();
       closeForm();
     },
-    function () {
-      window.message.openError();
+    function (error) {
+      window.message.openError(error);
       closeForm();
     });
-    evt.preventDefault();
   });
 
   window.form = {

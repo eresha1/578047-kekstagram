@@ -2,6 +2,7 @@
 
 (function () {
   var ESC_KEY = 27;
+
   function escPress(cb) {
     return function (event) {
       if (event.keyCode === ESC_KEY) {
@@ -9,9 +10,14 @@
       }
     };
   }
+
   document.addEventListener('DOMContentLoaded', function () {
-    var pictures = window.data.get();
-    window.picture.render(pictures, window.bigPicture.show);
+    window.backend.load(function (data) {
+      window.data.set(data);
+      window.picture.render(window.data.get(), window.bigPicture.show);
+    }, function (error) {
+      window.message.loadError(error);
+    });
     window.bigPicture.setHandler(escPress);
     window.form.activate(escPress);
     window.effect.activate();

@@ -18,10 +18,10 @@
     SERVER_ERROR: 500
   };
   var ErrorMessage = {
-    MOVED_PERMANENTLY: 'Запрашиваемая страница была перенесена на новый URL на постоянной основе',
-    FOUND: 'Запрашиваемая страница была временно перенесена на другой URL.',
-    BAD_REQUEST: 'Запрос не может быть выполнен из-за синтаксической ошибки.',
-    UNAUTHORIZED: 'Сервер не может предоставить ресурс, так как клиент не авторизован.',
+    MOVED_PERMANENTLY: 'Ресурс перемещен навсегда',
+    FOUND: 'Ресурс временно перемещен.',
+    BAD_REQUEST: 'Неверный запрос.',
+    UNAUTHORIZED: 'Неавторизованный запрос.',
     NOT_FOUND: 'Запрашиваемый документ не найден.',
     SERVER_ERROR: 'Внутренняя ошибка сервера.'
   };
@@ -30,7 +30,7 @@
     TIMEOUT: 'Запрос не успел выполниться за '
   };
 
-  var createRequest = function (onLoad, onError) {
+  var createRequest = function (url, method, onLoad, onError, data) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
     xhr.addEventListener('load', function () {
@@ -70,26 +70,20 @@
       onError(Error.TIMEOUT + xhr.timeout + TIME_UNIT);
     });
 
-    return xhr;
+    xhr.open(method, url);
+    xhr.send(data);
   };
 
   var load = function (onLoad, onError) {
-    var loadRequest = createRequest(onLoad, onError);
-    loadRequest.open('GET', Url.LOAD);
-    loadRequest.send();
+    createRequest(Url.LOAD, 'GET', onLoad, onError, null);
   };
 
   var upload = function (data, onLoad, onError) {
-    var uploadRequest = createRequest(onLoad, onError);
-    uploadRequest.open('POST', Url.UPLOAD);
-    uploadRequest.send(data);
+    createRequest(Url.UPLOAD, 'POST', onLoad, onError, data);
   };
-
 
   window.backend = {
     load: load,
     upload: upload
   };
-
-
 })();
