@@ -1,6 +1,7 @@
 'use strict';
 (function () {
   var data = null;
+  // var NEW_PHOTO_NUMBER = 10;
 
   // var MIN_LIKES = 15;
   // var MAX_LIKES = 200;
@@ -10,11 +11,31 @@
   // var NAMES = ['Артем', 'Семен', 'Антон', 'Марина', 'Светлана', 'Геннадий'];
   // var pictures = null;
 
-  // function getRandomInteger(min, max) {
-  //   var rand = min - 0.5 + Math.random() * (max - min + 1);
-  //   rand = Math.round(rand);
-  //   return rand;
-  // }
+  var getRandomInteger = function (min, max) {
+    var rand = min - 0.5 + Math.random() * (max - min + 1);
+    rand = Math.round(rand);
+    return rand;
+  };
+
+  // var renderNewPhoto = function (array) {
+  //   var randomStartNumber = getRandomInteger(0, array.length - NEW_PHOTO_NUMBER);
+  //   var randomEndNumber = randomStartNumber + NEW_PHOTO_NUMBER;
+  //   return array.slice(randomStartNumber, randomEndNumber);
+  // };
+
+  // var renderNewPhoto = function (array) {
+  //   var arrayNewPhoto = [];
+  //   var count = NEW_PHOTO_NUMBER;
+  //   for (var i = 0; i < count; i++) {
+  //     var index = getRandomInteger(i, array.length - 1);
+  //     var tmp = array[index];
+  //     array[index] = array[i];
+  //     array[i] = tmp;
+  //     arrayNewPhoto.push(tmp);
+  //   }
+  //   return arrayNewPhoto;
+  // };
+
 
   // var getComment = function (minCount, maxCount) {
   //   var arrayComment = [];
@@ -57,12 +78,18 @@
 
   // pictures = createPhotosData();
 
+  // var photos = window.data.get();
+  // console.log(photos);
+
   window.data = {
     get: function () {
       return data;
     },
     set: function (newPictures) {
       data = newPictures;
-    }
+    },
+
+    // getRenderNewPhoto: renderNewPhoto(),
+    getRandomInteger: getRandomInteger
   };
 })();

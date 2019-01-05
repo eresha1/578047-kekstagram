@@ -51,11 +51,10 @@
     }
   };
 
-  // var openMessageUpload = function () {
+  // var openMessageUload = function () {
   //   var messageUpload = messagesTemplate.cloneNode(true);
   //   main.appendChild(messageUpload);
   // };
-
 
   var openError = function (errorText) {
     var messageError = errorTemplate.cloneNode(true);
@@ -80,8 +79,16 @@
     document.removeEventListener('click', errorInnerClickHandler);
   };
 
-  var loadError = function (errorMessage) {
-    loadError.error = errorMessage;
+
+  var loadError = function (errorText) {
+    var node = document.createElement('div');
+    node.style = 'z-index: 100; margin: 0 auto; text-align: center; background-color: red;';
+    node.style.position = 'absolute';
+    node.style.left = 0;
+    node.style.right = 0;
+    node.style.fontSize = '20px';
+    node.textContent = errorText;
+    document.body.insertAdjacentElement('afterbegin', node);
   };
 
   window.message = {

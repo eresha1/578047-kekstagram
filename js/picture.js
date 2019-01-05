@@ -24,18 +24,16 @@
     });
   }
 
-  // var getSuccessHandler = renderPictures(renderedPhoto);
-
-  // var getErrorHandler = function (errorMessage) {
-  //   window.message.openError(errorMessage);
-  // };
-
-  // window.backend.load(getSuccessHandler, getErrorHandler);
+  var cleanPictures = function () {
+    var deletingPictures = сontainerPictures.querySelectorAll('.picture');
+    deletingPictures.forEach(function (item) {
+      сontainerPictures.removeChild(item);
+    });
+  };
 
 
   window.picture = {
-    render: renderPictures
-    // getSuccessHandler: getSuccessHandler,
-    // getErrorHandler: getErrorHandler
+    render: renderPictures,
+    clean: cleanPictures
   };
 })();
