@@ -24,8 +24,16 @@
     });
   }
 
-  // Почему pictures, а не picture (по названию модуля)
+  var cleanPictures = function () {
+    var deletingPictures = сontainerPictures.querySelectorAll('.picture');
+    deletingPictures.forEach(function (item) {
+      сontainerPictures.removeChild(item);
+    });
+  };
+
+
   window.picture = {
-    render: renderPictures
+    render: renderPictures,
+    clean: cleanPictures
   };
 })();

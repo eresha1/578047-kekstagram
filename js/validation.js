@@ -3,9 +3,9 @@
 
   var textHashtag = document.querySelector('.text__hashtags');
   var textComment = document.querySelector('.text__description');
-  // var btnSubmit = document.querySelector('.img-upload__submit');
 
   var HASHTAG_MAX_NUMBER = 5;
+  var HASHTAG_MAX_LENGTH = 20;
   var DESCRIPTION_LENGTH = 140;
 
   var ERROR_MESSAGE = {
@@ -40,7 +40,7 @@
         counter = ERROR_MESSAGE.errorContent;
         break;
       }
-      if (element.length > 20) {
+      if (element.length > HASHTAG_MAX_LENGTH) {
         counter = ERROR_MESSAGE.maxLengthHashtag;
         break;
       }
@@ -62,14 +62,12 @@
     var hashtagsArr = getHashtagsArray(textHashtag);
     var target = evt.target;
     var hashtagErr = checkHashtag(hashtagsArr);
-    if (textHashtag.value === '') {
-      target.setCustomValidity('');
-    }
     if (hashtagErr) {
       target.setCustomValidity(hashtagErr);
-      changeColorBorder(textHashtag);
+      textHashtag.style = 'border: 3px solid red';
     } else {
       target.setCustomValidity('');
+      textHashtag.style = '';
     }
   };
 
@@ -79,16 +77,8 @@
     } else {
       textComment.setCustomValidity('');
     }
-    changeColorBorder(textComment);
   };
 
-  var changeColorBorder = function (field) {
-    if (field.validity.valid) {
-      field.style.outline = 'none';
-    } else {
-      field.style.outline = '2px solid red';
-    }
-  };
 
   function verifyValidity() {
     textHashtag.focus();
@@ -101,8 +91,8 @@
     textComment.removeEventListener('change', commentChangeHandler);
     textHashtag.setCustomValidity('');
     textComment.setCustomValidity('');
-    textHashtag.style.outline = 'none';
-    textComment.style.outline = 'none';
+    textHashtag.style = '';
+    textComment.style = '';
   }
 
   window.validation = {
