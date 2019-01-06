@@ -121,6 +121,7 @@
 
   window.effect = {
     activate: setEffects,
-    deActivate: removeEffects
+    deActivate: removeEffects,
+    effectTarget: effectTarget
   };
 })();

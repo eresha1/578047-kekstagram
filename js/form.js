@@ -1,6 +1,7 @@
 'use strict';
 (function () {
 
+  var FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
   var form = document.querySelector('.img-upload__form');
   var overlay = form.querySelector('.img-upload__overlay');
   var closeFormBtn = form.querySelector('#upload-cancel');
@@ -17,6 +18,26 @@
   }
   function openFormHandler(evt) {
     evt.preventDefault();
+    var file = uploadFile.files[0];
+    var fileName = file.name.toLowerCase();
+    var preview = window.effect.effectTarget;
+
+    var matches = FILE_TYPES.some(function (it) {
+      return fileName.endsWith(it);
+    });
+
+    if (matches) {
+      var reader = new FileReader();
+
+      reader.addEventListener('load', function () {
+        preview.src = reader.result;
+      });
+
+      reader.readAsDataURL(file);
+    // } else {
+    //   window.message.loadError('Ошибка! Неправильный тип файла. Просьба выбрать файл в формате JPG, PNG, JPEG, GIF');
+    }
+
     overlay.classList.remove('hidden');
     document.addEventListener('keydown', escPressHandler);
     closeFormBtn.addEventListener('click', closeFormHandler);
