@@ -81,15 +81,41 @@
   // var photos = window.data.get();
   // console.log(photos);
 
+  // var renderNewPhoto = function (array) {
+  //   var arrayNewPhoto = [];
+  //   var count = NEW_PHOTO_NUMBER;
+  //   for (var i = 0; i < count; i++) {
+  //     var index = getRandomInteger(i, array.length - 1);
+  //     var tmp = array[index];
+  //     array[index] = array[i];
+  //     array[i] = tmp;
+  //     arrayNewPhoto.push(tmp);
+  //   }
+  //   return arrayNewPhoto;
+  // };
+
+  // var renderCommentsPhoto = function (arr) {
+  //   var arrayCopy = arr.slice();
+  //   arrayCopy.sort(function (first, second) {
+  //     if (first.comments.length < second.comments.length) {
+  //       return 1;
+  //     } else if (first.comments.length > second.comments.length) {
+  //       return -1;
+  //     }
+  //     return 0;
+  //   });
+  //   return arrayCopy;
+  // };
+
   window.data = {
     get: function () {
       return data;
     },
     set: function (newPictures) {
       data = newPictures;
+      // console.log(newPictures);
     },
 
-    // getRenderNewPhoto: renderNewPhoto(),
     getRandomInteger: getRandomInteger
   };
 })();
