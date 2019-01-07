@@ -1,11 +1,7 @@
 'use strict';
 
 (function () {
-  var NEW_PHOTO_NUMBER = 10;
-
-  // var photos = [];
-  // photos = window.data.get();
-  // console.log(photos);
+  var NEW_PHOTO_NUMBER = 2;
 
   var Filter = {
     POPULAR: 'filter-popular',
@@ -50,8 +46,7 @@
     evt.target.classList.add('img-filters__button--active');
   };
 
-
-  var changeFilter = /* window.debounce( */ function (evt) {
+  var changeFilter = function (evt) {
     window.picture.clean();
     // var target = evt.target;
 
@@ -70,12 +65,11 @@
         window.picture.render(renderCommentsPhoto(window.data.get()), window.bigPicture.show);
         break;
     }
-  }/* ) */;
+  };
 
   imgFiltersForm.addEventListener('click', function (evt) {
     // var target = evt.target;
-
-    changeFilter(evt);
+    window.debounce(changeFilter.bind(null, evt));
     changeClassButton(evt);
   });
 
