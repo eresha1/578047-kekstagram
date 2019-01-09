@@ -16,8 +16,8 @@
   function deActivateForm() {
     uploadFile.removeEventListener('change', openFormHandler);
   }
-  function openFormHandler(evt) {
-    evt.preventDefault();
+
+  var selectFile = function () {
     var file = uploadFile.files[0];
     var fileName = file.name.toLowerCase();
     var preview = window.effect.effectTarget;
@@ -37,7 +37,11 @@
     // } else {
     //   window.message.loadError('Ошибка! Неправильный тип файла. Просьба выбрать файл в формате JPG, PNG, JPEG, GIF');
     }
+  };
 
+  function openFormHandler(evt) {
+    evt.preventDefault();
+    selectFile();
     overlay.classList.remove('hidden');
     document.addEventListener('keydown', escPressHandler);
     closeFormBtn.addEventListener('click', closeFormHandler);

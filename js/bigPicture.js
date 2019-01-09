@@ -61,6 +61,7 @@
   }
   function closeBigPicture() {
     picture.classList.add('hidden');
+    commentLoader.classList.remove('hidden');
     commentLoader.removeEventListener('click', addCommentHandler);
     closePicture.removeEventListener('click', closeBigPictureHandler);
     document.removeEventListener('keydown', escPressHandler);

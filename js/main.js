@@ -4,8 +4,8 @@
   var ESC_KEY = 27;
 
   function escPress(cb) {
-    return function (event) {
-      if (event.keyCode === ESC_KEY) {
+    return function (evt) {
+      if (evt.keyCode === ESC_KEY) {
         cb();
       }
     };

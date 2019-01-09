@@ -62,7 +62,7 @@
     var hashtagsArr = getHashtagsArray(textHashtag);
     var target = evt.target;
     var hashtagErr = checkHashtag(hashtagsArr);
-    if (hashtagErr) {
+    if (hashtagErr /* && textHashtag.value !== '' */) {
       target.setCustomValidity(hashtagErr);
       textHashtag.style = 'border: 3px solid red';
     } else {
