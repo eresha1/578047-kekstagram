@@ -6,9 +6,9 @@
   var lastTimeout = null;
   window.debounce = function (cb) {
     if (lastTimeout) {
-      window.clearTimeout(lastTimeout);
+      clearTimeout(lastTimeout);
     }
-    lastTimeout = window.setTimeout(cb, DEBOUNCE_INTERVAL);
+    lastTimeout = setTimeout(cb, DEBOUNCE_INTERVAL);
   };
 
 })();

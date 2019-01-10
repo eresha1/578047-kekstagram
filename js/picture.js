@@ -15,7 +15,6 @@
       photo.addEventListener('click', function (event) {
         event.preventDefault();
         cb(item);
-        // window.bigPicture.show(item);
       });
 
       fragment.appendChild(photo);
@@ -25,10 +24,10 @@
   }
 
   var cleanPictures = function () {
-    var deletingPictures = сontainerPictures.querySelectorAll('.picture');
-    deletingPictures.forEach(function (item) {
-      сontainerPictures.removeChild(item);
+    renderedPhoto.forEach(function (item) {
+      item.remove();
     });
+    renderedPhoto = [];
   };
 
 

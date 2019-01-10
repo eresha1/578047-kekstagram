@@ -16,7 +16,6 @@
       window.data.set(data);
       window.picture.render(window.data.get(), window.bigPicture.show);
       window.filter.show();
-      // console.log(data)
     }, function (error) {
       window.message.loadError(error);
     });

@@ -4,7 +4,6 @@
   var main = document.querySelector('main');
   var errorTemplate = document.querySelector('#error').content.querySelector('.error');
   var successTemplate = document.querySelector('#success').content.querySelector('.success');
-  // var messagesTemplate = document.querySelector('#messages').content.querySelector('.img-upload__message');
   var escPressSuccessHandler = null;
   var escPressErrorHandler = null;
 
@@ -50,11 +49,6 @@
       closeError();
     }
   };
-
-  // var openMessageUload = function () {
-  //   var messageUpload = messagesTemplate.cloneNode(true);
-  //   main.appendChild(messageUpload);
-  // };
 
   var openError = function (errorText) {
     var messageError = errorTemplate.cloneNode(true);
