@@ -4,8 +4,8 @@
   var ESC_KEY = 27;
 
   function escPress(cb) {
-    return function (event) {
-      if (event.keyCode === ESC_KEY) {
+    return function (evt) {
+      if (evt.keyCode === ESC_KEY) {
         cb();
       }
     };
@@ -16,7 +16,6 @@
       window.data.set(data);
       window.picture.render(window.data.get(), window.bigPicture.show);
       window.filter.show();
-      // console.log(data)
     }, function (error) {
       window.message.loadError(error);
     });

@@ -1,7 +1,7 @@
 'use strict';
 
 (function () {
-  var NEW_PHOTO_NUMBER = 2;
+  var NEW_PHOTO_NUMBER = 10;
 
   var Filter = {
     POPULAR: 'filter-popular',
@@ -10,14 +10,20 @@
   };
   var imgFilters = document.querySelector('.img-filters');
   var imgFiltersForm = imgFilters.querySelector('.img-filters__form');
-  var imgFiltersButton = imgFilters.querySelectorAll('.img-filters__button');
+  var activeFilterButton = imgFilters.querySelector('.img-filters__button--active');
 
-  var renderNewPhoto = function (array) {
+  var getRandomInteger = function (min, max) {
+    var rand = min - 0.5 + Math.random() * (max - min + 1);
+    rand = Math.round(rand);
+    return rand;
+  };
+
+  var sortNewPhoto = function (array) {
     var arrayCopy = array.slice();
     var arrayNewPhoto = [];
-    var count = NEW_PHOTO_NUMBER;
+    var count = arrayCopy.length < NEW_PHOTO_NUMBER ? arrayCopy.length : NEW_PHOTO_NUMBER;
     for (var i = 0; i < count; i++) {
-      var index = window.data.getRandomInteger(i, arrayCopy.length - 1);
+      var index = getRandomInteger(i, arrayCopy.length - 1);
       var tmp = arrayCopy[index];
       arrayCopy[index] = arrayCopy[i];
       arrayCopy[i] = tmp;
@@ -26,51 +32,36 @@
     return arrayNewPhoto;
   };
 
-  var renderCommentsPhoto = function (array) {
+  var sortCommentsPhoto = function (array) {
     var arrayCopy = array.slice();
-    arrayCopy.sort(function (first, second) {
-      if (first.comments.length < second.comments.length) {
-        return 1;
-      } else if (first.comments.length > second.comments.length) {
-        return -1;
-      }
-      return 0;
+    return arrayCopy.sort(function (first, second) {
+      return second.comments.length - first.comments.length;
     });
-    return arrayCopy;
-  };
-
-  var changeClassButton = function (evt) {
-    imgFiltersButton.forEach(function (element) {
-      element.classList.remove('img-filters__button--active');
-    });
-    evt.target.classList.add('img-filters__button--active');
   };
 
   var changeFilter = function (evt) {
     window.picture.clean();
-    // var target = evt.target;
+    var data = null;
 
     switch (evt.target.id) {
       case Filter.POPULAR:
-        // console.log('популярные');
-        window.picture.render(window.data.get(), window.bigPicture.show);
+        data = window.data.get();
         break;
       case Filter.NEW:
-        // console.log('новые');
-        window.picture.render(renderNewPhoto(window.data.get()), window.bigPicture.show);
-
+        data = sortNewPhoto(window.data.get());
         break;
       case Filter.DISCUSSED:
-        // console.log('обсуждаемые');
-        window.picture.render(renderCommentsPhoto(window.data.get()), window.bigPicture.show);
+        data = sortCommentsPhoto(window.data.get());
         break;
     }
+    window.picture.render(data, window.bigPicture.show);
   };
 
   imgFiltersForm.addEventListener('click', function (evt) {
-    // var target = evt.target;
+    activeFilterButton.classList.remove('img-filters__button--active');
+    activeFilterButton = evt.target;
+    activeFilterButton.classList.add('img-filters__button--active');
     window.debounce(changeFilter.bind(null, evt));
-    changeClassButton(evt);
   });
 
   window.filter = {
